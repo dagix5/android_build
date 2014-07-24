@@ -57,6 +57,9 @@ Usage:  ota_from_target_files [flags] input_target_files output_ota_package
       first, so that any changes made to the system partition are done
       using the new recovery (new kernel, etc.).
 
+  --recovery  <on|off>
+      Specify whether to include recovery image (off by default).
+
 """
 
 import sys
@@ -94,6 +97,7 @@ OPTIONS.extra_script = None
 OPTIONS.aslr_mode = True
 OPTIONS.worker_threads = 3
 OPTIONS.two_step = False
+OPTIONS.recovery = False
 
 def MostPopularKey(d, default):
   """Given a dict, return the key corresponding to the largest
@@ -487,7 +491,10 @@ else if get_stage("%(bcb_dev)s", "stage") == "3/3" then
 
   script.FormatPartition("/system")
   script.Mount("/system")
-  script.UnpackPackageDir("recovery", "/system")
+
+  if OPTIONS.recovery:
+    script.UnpackPackageDir("recovery", "/system")
+
   script.UnpackPackageDir("system", "/system")
 
   symlinks = CopySystemFiles(input_zip, output_zip)
@@ -495,7 +502,8 @@ else if get_stage("%(bcb_dev)s", "stage") == "3/3" then
 
   boot_img = common.GetBootableImage("boot.img", "boot.img",
                                      OPTIONS.input_tmp, "BOOT")
-  MakeRecoveryPatch(OPTIONS.input_tmp, output_zip, recovery_img, boot_img)
+  if OPTIONS.recovery:
+    MakeRecoveryPatch(OPTIONS.input_tmp, output_zip, recovery_img, boot_img)
 
   Item.GetMetadata(input_zip)
   Item.Get("system").SetPermissions(script)
@@ -968,6 +976,9 @@ def main(argv):
       OPTIONS.worker_threads = int(a)
     elif o in ("-2", "--two_step"):
       OPTIONS.two_step = True
+      OPTIONS.recovery = True
+    elif o in ("--recovery"):
+      OPTIONS.recovery = True
     else:
       return False
     return True
@@ -983,6 +994,7 @@ def main(argv):
                                               "worker_threads=",
                                               "aslr_mode=",
                                               "two_step",
+                                              "recovery",
                                               ],
                              extra_option_handler=option_handler)
 
