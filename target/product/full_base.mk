@@ -21,24 +21,24 @@
 
 PRODUCT_PACKAGES := \
     libfwdlockengine \
-    OpenWnn \
-    PinyinIME \
-    libWnnEngDic \
-    libWnnJpnDic \
     libwnndict \
-    VideoEditor \
     WAPPushManager
+#    libWnnEngDic \
+#    OpenWnn \
+#    PinyinIME \
+#    libWnnJpnDic \
+#    VideoEditor \
 
 PRODUCT_PACKAGES += \
-    Galaxy4 \
-    HoloSpiralWallpaper \
     LiveWallpapers \
     LiveWallpapersPicker \
-    MagicSmokeWallpapers \
     NoiseField \
     PhaseBeam \
     VisualizationWallpapers \
     PhotoTable
+#    Galaxy4 \
+#    HoloSpiralWallpaper \
+#    MagicSmokeWallpapers \
 
 # Additional settings used in all AOSP builds
 PRODUCT_PROPERTY_OVERRIDES := \
