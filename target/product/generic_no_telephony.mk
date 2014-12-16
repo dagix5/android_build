@@ -36,7 +36,6 @@ PRODUCT_PACKAGES := \
     OneTimeInitializer \
     PrintSpooler \
     Provision \
-    QuickSearchBox \
     Settings \
     SystemUI \
     TeleService \
@@ -45,6 +44,7 @@ PRODUCT_PACKAGES := \
     hostapd \
     wpa_supplicant.conf \
     WallpaperCropper
+#    QuickSearchBox \
 #    Music \
 #    MusicFX \
 #    Email \
